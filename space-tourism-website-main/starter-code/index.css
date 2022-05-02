@@ -113,14 +113,10 @@ select {
     gap: var(--gap, 1rem);
 }
 
-.flow > * + *{
-  /* flow > *:not(:firs-child) { */
+.flow > *:where(:not(:first-child)) {
+  /* flow > *:where(not(:first-child)) { */
   /* anything but not first child */
-      margin-top: 1rem;
-      outline: 1px solid red;
-  }
-    margin-top: 1rem;
-    outline: 1px solid red;
+      margin-top: var(--flow-space,1rem);
 }
 
 .container {
@@ -188,4 +184,121 @@ select {
     margin-right: .5rem;
     font-weight: 700;
     color: hsl( var(--clr-white) / .25 );
+}
+
+/* ------------------- */
+/* Compontents         */
+/* ------------------- */
+
+.large-button {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    padding: 0 2em;
+    aspect-ratio: 1;
+    text-decoration: none;
+}
+
+.large-button::after {
+  /* 双冒号 伪元素 作为已选中元素的最后一个子元素*/
+    content: '';
+    position: absolute;
+    z-index: -1;
+    /* 元素之间重叠的时候， z-index 较大的元素会覆盖较小的元素在上层进行显示。 */
+    border-radius: 50%;
+    background: hsl( var(--clr-white) / .1);
+    opacity: 0;
+    /* 不透明度 */
+    width: 100%;
+    height: 100%;
+    transition: opacity 500ms linear, transform 750ms ease-in-out !important;
+    /* 渐变效果 无法实现*/
+}
+
+.large-button:hover::after,
+/* 鼠标悬停 */
+.large-button:focus::after {
+    opacity: 1;
+    transform: scale(1.5);
+}
+
+.primary-navigation {
+    --gap: 8rem;
+    --underline-gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.primary-navigation a {
+    text-decoration: none;
+}
+
+.primary-navigation a > span {
+    font-weight: 700;
+    margin-right: .5em;
+}
+
+.underline-indicators > * {
+  /* select every direct child or diect descendant  */
+    cursor: pointer;
+    /* 光标样式 */
+    padding: var(--underline-gap, 1rem) 0;
+    border: 0;
+    border-bottom: .2rem solid hsl( var(--clr-white) / 0 );
+}
+
+.underline-indicators > *:hover,
+.underline-indicators > *:focus {
+    border-color: hsl( var(--clr-white) / .5);
+}
+ /*此功能无法实现 */
+
+.underline-indicators > .active,
+.underline-indicators > [aria-selected="true"] {
+    color: hsl( var(--clr-white) / 1);
+    border-color: hsl( var(--clr-white) / 1); 
+}
+
+.tab-list {
+    --gap: 2rem;
+}
+
+.dot-indicators > *{
+    border-radius: 50%;
+    cursor: pointer;
+    border: 0;
+    padding: .5em;
+    background-color: hsl( var(--clr-white) / .25);
+}
+
+.dot-indicators > *:hover,
+.dot-indicators > *:focus {
+    background-color: hsl( var(--clr-white) / .5);
+}
+
+.dot-indicators > [aria-selected="true"] {
+    background-color: hsl( var(--clr-white) / 1); 
+}
+
+.number-indicators > *{
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid white;
+    padding: 1px;
+    background-color: hsl( var(--clr-white) / .25);
+    width: 100px;
+    height: 100px;
+    text-align: center;
+ }
+
+.number-indicators > *:hover,
+.number-indicators > *:focus {
+    background-color: hsl( var(--clr-white) / .5);
+}
+
+.number-indicators > [aria-selected="true"] {
+    background-color: hsl( var(--clr-white) / 1); 
 }
